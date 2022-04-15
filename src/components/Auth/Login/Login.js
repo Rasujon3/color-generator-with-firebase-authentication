@@ -4,6 +4,7 @@ import { auth } from "../../../firebase.init";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../../styles/Login.css";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({
@@ -89,6 +90,9 @@ const Login = () => {
         {/* {error && <p className="error-message">{error}</p>} */}
         {/* {hookError && <p className="error-message">{hookError?.message}</p>} */}
         <ToastContainer />
+        <p>
+          Don't have an account? <Link to="/signup">Sign up</Link>
+        </p>
       </form>
     </div>
   );
