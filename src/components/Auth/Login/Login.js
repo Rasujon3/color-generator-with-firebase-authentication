@@ -55,6 +55,7 @@ const Login = () => {
         />
         <button>Login</button>
         {error && <p className="error-message">{error}</p>}
+        {hookError && <p className="error-message">{hookError?.message}</p>}
       </form>
     </div>
   );
