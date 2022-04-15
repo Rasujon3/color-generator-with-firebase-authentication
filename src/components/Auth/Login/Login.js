@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase.init";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +22,8 @@ const Login = () => {
 
   const [signInWithEmailAndPassword, user, loading, hookError] =
     useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
 
   const handleEmailChange = (e) => {
     const emailregex = /\S+@\S+\.\S+/;
@@ -52,8 +57,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (hookError) {
-      switch (hookError?.code) {
+    const error = hookError || googleError;
+    if (error) {
+      switch (error?.code) {
         case "auth/invalid-email":
           toast("Invalid email");
           break;
@@ -68,7 +74,7 @@ const Login = () => {
           break;
       }
     }
-  }, [hookError]);
+  }, [hookError, googleError]);
 
   return (
     <div className="login-container">
@@ -94,6 +100,7 @@ const Login = () => {
           Don't have an account? <Link to="/signup">Sign up</Link>
         </p>
       </form>
+      <button onClick={() => signInWithGoogle()}>Google</button>
     </div>
   );
 };
