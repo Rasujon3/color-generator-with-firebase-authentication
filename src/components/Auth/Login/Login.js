@@ -14,13 +14,24 @@ const Login = () => {
   const handleEmailChange = (e) => {
     const emailregex = /\S+@\S+\.\S+/;
     const validEmail = emailregex.test(e.target.value);
-    console.log(validEmail);
-
-    // setEmail(e.target.value);
+    // console.log(validEmail);
+    if (validEmail) {
+      setError("");
+      setEmail(e.target.value);
+    } else {
+      setError("Invalid Email");
+    }
   };
 
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+    const passwordRegex = /.{6,}/;
+    const validPassword = passwordRegex.test(e.target.value);
+    if (validPassword) {
+      setError("");
+      setPassword(e.target.value);
+    } else {
+      setError("Password must be minimum 6 chharacters");
+    }
   };
 
   const handleLogin = (e) => {
@@ -43,6 +54,7 @@ const Login = () => {
           onChange={handlePasswordChange}
         />
         <button>Login</button>
+        {error && <p className="error-message">{error}</p>}
       </form>
     </div>
   );
